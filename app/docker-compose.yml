@@ -13,10 +13,11 @@ services:
     networks:
       - app-network
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", -h", "localhost"]
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -prootpass || exit 1"]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 10
+      start_period: 60s 
 
   flask-api:
     build: ./flask-api
