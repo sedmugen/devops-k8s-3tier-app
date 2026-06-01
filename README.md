@@ -11,3 +11,9 @@ The application is containerized using Docker Compose, pushed through GitHub Act
 - MySQL stores application data.
 - Docker Compose runs the local containerized stack.
 - Kubernetes manifests deploy the same application on Minikube.
+
+## Kubernetes Deployment
+
+The Kubernetes setup uses a separate namespace named assignment3.
+
+MySQL uses a PersistentVolume and PersistentVolumeClaim for data persistence. Flask and MySQL use ClusterIP services for internal communication, while Nginx uses a NodePort service to expose the application.
