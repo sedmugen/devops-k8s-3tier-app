@@ -15,9 +15,12 @@ spec:
       labels:
         app: flask-api
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
       containers:
         - name: flask-api
-          image: saadmughal009/flask-api:latest
+          image: sedmugen/flask-api:latest
           ports:
             - containerPort: 5000
           env:

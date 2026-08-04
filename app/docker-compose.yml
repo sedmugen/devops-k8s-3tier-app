@@ -4,28 +4,29 @@ services:
   mysql:
     image: mysql:8.0
     environment:
-      MYSQL_ROOT_PASSWORD: rootpass
-      MYSQL_DATABASE: flaskdb
-      MYSQL_USER: flaskuser
-      MYSQL_PASSWORD: flaskpass
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpass}
+      MYSQL_DATABASE: ${DB_NAME:-flaskdb}
+      MYSQL_USER: ${DB_USER:-flaskuser}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-flaskpass}
     volumes:
       - mysql-data:/var/lib/mysql
     networks:
       - app-network
     healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -prootpass || exit 1"]
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -p${MYSQL_ROOT_PASSWORD:-rootpass} || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 10
-      start_period: 60s 
+      start_period: 30s
 
   flask-api:
     build: ./flask-api
     environment:
-      DB_HOST: mysql
-      DB_USER: flaskuser
-      DB_PASSWORD: flaskpass
-      DB_NAME: flaskdb
+      DB_HOST: ${DB_HOST:-mysql}
+      DB_USER: ${DB_USER:-flaskuser}
+      DB_PASSWORD: ${DB_PASSWORD:-flaskpass}
+      DB_NAME: ${DB_NAME:-flaskdb}
+      FLASK_ENV: ${FLASK_ENV:-production}
     depends_on:
       mysql:
         condition: service_healthy

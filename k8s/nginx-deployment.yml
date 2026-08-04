@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: saadmughal009/nginx-proxy:latest
+          image: sedmugen/nginx-proxy:latest
           ports:
             - containerPort: 80
           volumeMounts:
